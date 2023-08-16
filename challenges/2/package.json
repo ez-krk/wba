@@ -1,0 +1,19 @@
+{
+  "name": "2",
+  "packageManager": "yarn@3.6.1",
+  "scripts": {
+    "metadata": "ts-node spl_metadata.ts",
+    "transfer": "ts-node spl_transfer.ts"
+  },
+  "dependencies": {
+    "@metaplex-foundation/mpl-token-metadata": "^2.13.0",
+    "@solana/spl-token": "^0.3.8",
+    "@solana/web3.js": "^1.78.4",
+    "@types/node": "^20.5.0",
+    "bs58": "4.0.1",
+    "typescript": "^5.1.6"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.1"
+  }
+}
