@@ -6,10 +6,9 @@ import {
   Transaction,
   sendAndConfirmTransaction,
 } from "@solana/web3.js";
-import wallet from "./keys/wba-wallet.json";
+import wallet from "../keys/wba-wallet.json";
 import {
   DataV2,
-  createCreateMetadataAccountV2Instruction,
   createCreateMetadataAccountV3Instruction,
 } from "@metaplex-foundation/mpl-token-metadata";
 

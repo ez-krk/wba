@@ -2,8 +2,8 @@
   "name": "2",
   "packageManager": "yarn@3.6.1",
   "scripts": {
-    "metadata": "ts-node spl_metadata.ts",
-    "transfer": "ts-node spl_transfer.ts"
+    "metadata": "ts-node src/spl_metadata.ts",
+    "transfer": "ts-node src/spl_transfer.ts"
   },
   "dependencies": {
     "@metaplex-foundation/mpl-token-metadata": "^2.13.0",
