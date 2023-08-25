@@ -6,7 +6,7 @@ import {
   Transaction,
   sendAndConfirmTransaction,
 } from "@solana/web3.js";
-import wallet from "../keys/wba-wallet.json";
+import wallet from "../../keys/wba-wallet.json";
 import {
   DataV2,
   createCreateMetadataAccountV3Instruction,
@@ -20,7 +20,7 @@ const commitment: Commitment = "confirmed";
 const connection = new Connection("https://api.devnet.solana.com", commitment);
 
 // Define our Mint address
-const mint = new PublicKey("2KghEgNJY6VK8sP9LPGpFqDzmn77ofqmdvvBBsn2bctL");
+const mint = new PublicKey("JoHuxuCxfbp68RxR5C6JMURFefb339PwtHXowC43cCF");
 
 // Add the Token Metadata Program
 const token_metadata_program_id = new PublicKey(
@@ -39,8 +39,8 @@ const [metadata_pda, _bump] = PublicKey.findProgramAddressSync(
 );
 
 const ON_CHAIN_METADATA = {
-  name: "KRK WBA Token",
-  symbol: "KWBA",
+  name: "KRK RUG",
+  symbol: "KRUG",
   uri: "https://raw.githubusercontent.com/krk-finance/cdn.krk.finance/main/img/misc/metadata.json", // this is the uri to the offchain metadata
   sellerFeeBasisPoints: 0,
   creators: null,

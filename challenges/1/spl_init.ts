@@ -12,6 +12,9 @@ import {
   getOrCreateAssociatedTokenAccount,
 } from "@solana/spl-token";
 
+import wallet from "../../keys/wba-wallet.json";
+const keypair = Keypair.fromSecretKey(new Uint8Array(wallet));
+
 const AIRDROP_AMOUNT = 2 * LAMPORTS_PER_SOL; // 1 SOL
 
 const connection = new Connection(clusterApiUrl("devnet"));
@@ -40,9 +43,9 @@ const initMint = async () => {
 
   const tokenMint = await createMint(
     connection,
-    initializer,
-    new PublicKey("7sydHcmax59DZJ523tFQEakwkJ3vBDWUE64auHy7yn1N"),
-    new PublicKey("7sydHcmax59DZJ523tFQEakwkJ3vBDWUE64auHy7yn1N"),
+    keypair,
+    keypair.publicKey,
+    keypair.publicKey,
     6
   );
   console.log(

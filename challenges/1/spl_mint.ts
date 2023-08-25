@@ -1,7 +1,7 @@
 import { Connection, Keypair, PublicKey, clusterApiUrl } from "@solana/web3.js";
 import { getOrCreateAssociatedTokenAccount, mintTo } from "@solana/spl-token";
 
-import wallet from "./keys/wba-wallet.json";
+import wallet from "../keys/wba-wallet.json";
 const keypair = Keypair.fromSecretKey(new Uint8Array(wallet));
 
 const connection = new Connection(clusterApiUrl("devnet"));

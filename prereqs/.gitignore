@@ -1,7 +1,0 @@
-.yarn*
-
-**.pnp.*
-
-keys/*
-
-**wallet.json
