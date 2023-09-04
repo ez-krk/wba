@@ -1,0 +1,1 @@
+export const TOKEN_ADDRESS = "39iSGncpTCQB2TF89SyqLtY6Vhw564VwxUUYK5ABRwym"
