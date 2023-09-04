@@ -15,8 +15,6 @@ no-log-ix-name = []
 cpi = ["no-entrypoint"]
 default = []
 
-# cargo-features = ["workspace-inheritance"]
-
 
 [dependencies]
 anchor-lang = {version = "0.28.0", features=["init-if-needed"]}
