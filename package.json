@@ -22,7 +22,8 @@
     "dependencies": {
         "@coral-xyz/anchor": "^0.28.0",
         "@solana/spl-token": "^0.3.8",
-        "@solana/web3.js": "^1.78.4"
+        "@solana/web3.js": "^1.78.4",
+        "randombytes": "^2.1.0"
     },
     "devDependencies": {
         "@types/bn.js": "^5.1.0",
