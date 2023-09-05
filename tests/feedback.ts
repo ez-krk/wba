@@ -19,7 +19,7 @@ describe("feedback", () => {
   const connection: Connection = anchor.getProvider().connection;
 
   const receiver = new Keypair();
-  const reviewer = new Keypair();
+  const sender = new Keypair();
 
   const seed = new BN(1);
 
@@ -29,7 +29,7 @@ describe("feedback", () => {
   )[0];
 
   const user = PublicKey.findProgramAddressSync(
-    [Buffer.from("user"), reviewer.publicKey.toBuffer()],
+    [Buffer.from("user"), sender.publicKey.toBuffer()],
     program.programId
   )[0];
 
@@ -37,7 +37,7 @@ describe("feedback", () => {
     [
       Buffer.from("feedback"),
       // session.toBytes(),
-      reviewer.publicKey.toBytes(),
+      sender.publicKey.toBytes(),
       seed.toBuffer("le", 8),
     ],
     program.programId
@@ -54,7 +54,7 @@ describe("feedback", () => {
     await anchor
       .getProvider()
       .connection.requestAirdrop(
-        reviewer.publicKey,
+        sender.publicKey,
         100 * anchor.web3.LAMPORTS_PER_SOL
       )
       .then(confirmTx);
@@ -81,11 +81,11 @@ describe("feedback", () => {
     await program.methods
       .newUser()
       .accounts({
-        owner: reviewer.publicKey,
+        owner: sender.publicKey,
         user,
         systemProgram: SystemProgram.programId,
       })
-      .signers([reviewer])
+      .signers([sender])
       .rpc()
       .then(confirmTx);
   });
@@ -98,13 +98,13 @@ describe("feedback", () => {
         seed
       )
       .accounts({
-        owner: reviewer.publicKey,
+        owner: sender.publicKey,
         session,
         user,
         feedback,
         systemProgram: SystemProgram.programId,
       })
-      .signers([reviewer])
+      .signers([sender])
       .rpc()
       .then(confirmTx);
   });
