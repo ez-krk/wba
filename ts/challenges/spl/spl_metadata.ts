@@ -6,7 +6,7 @@ import {
   Transaction,
   sendAndConfirmTransaction,
 } from "@solana/web3.js";
-import wallet from "../../keys/wba-wallet.json";
+import wallet from "../../../keys/wba-wallet.json";
 import {
   DataV2,
   createCreateMetadataAccountV3Instruction,
@@ -20,7 +20,7 @@ const commitment: Commitment = "confirmed";
 const connection = new Connection("https://api.devnet.solana.com", commitment);
 
 // Define our Mint address
-const mint = new PublicKey("25ZFsHJgbHd2XvJcdndXzo7CgK7CPSecVuKoPJVMTssm");
+const mint = new PublicKey("9Nw4cjn6fNcidKgqQoTH3igFuCVsLr2vrRSBrBSbYF23");
 
 // Add the Token Metadata Program
 const token_metadata_program_id = new PublicKey(

@@ -1,8 +1,18 @@
 import * as anchor from "@coral-xyz/anchor";
 import { Program, BN } from "@coral-xyz/anchor";
 import { ASSOCIATED_PROGRAM_ID } from "@coral-xyz/anchor/dist/cjs/utils/token";
-import { createMint, getOrCreateAssociatedTokenAccount, mintTo } from "@solana/spl-token";
-import { Commitment, Connection, Keypair, PublicKey, SystemProgram } from "@solana/web3.js";
+import {
+  createMint,
+  getOrCreateAssociatedTokenAccount,
+  mintTo,
+} from "@solana/spl-token";
+import {
+  Commitment,
+  Connection,
+  Keypair,
+  PublicKey,
+  SystemProgram,
+} from "@solana/web3.js";
 import { WbaVault } from "../target/types/wba_vault";
 
 const commitment: Commitment = "finalized";
@@ -20,7 +30,7 @@ describe("wba_vault", () => {
 
   const mint = Keypair.generate();
 
-  let mintAddr:string;
+  let mintAddr: string;
 
   const state = PublicKey.findProgramAddressSync(
     [Buffer.from("state"), owner.publicKey.toBuffer()],
@@ -51,7 +61,6 @@ describe("wba_vault", () => {
   });
 
   it("Create a new mint, creates an ATA and mints 100 tokens to our account", async () => {
-
     let token = await createMint(
       connection,
       owner,
@@ -66,7 +75,7 @@ describe("wba_vault", () => {
       connection,
       owner,
       token,
-      owner.publicKey,
+      owner.publicKey
     );
     console.log("ATA : ", fromAta.address.toBase58());
     let sendToken = await mintTo(
@@ -75,12 +84,12 @@ describe("wba_vault", () => {
       token,
       fromAta.address,
       owner.publicKey,
-      amount * 1 * 10 ** decimals,
+      amount * 1 * 10 ** decimals
     );
     console.log(`https://explorer.solana.com/tx/${sendToken}?cluster=devnet`);
     let tokenAmount = await connection.getTokenAccountBalance(fromAta.address);
     console.log(
-      `minted ${tokenAmount.value.uiAmountString} ${token.toBase58()} tokens`,
+      `minted ${tokenAmount.value.uiAmountString} ${token.toBase58()} tokens`
     );
   });
 
@@ -130,21 +139,21 @@ describe("wba_vault", () => {
       connection,
       owner,
       new PublicKey(mintAddr),
-      owner.publicKey,
+      owner.publicKey
     );
     await program.methods
-    .depositSpl(new BN(amount * 1 * 10 ** decimals))
-    .accounts({
-      owner: owner.publicKey,
-      auth,
-      vault: splVault,
-      state,
-      ownerAta: ownerAta.address,
-      mint: new PublicKey(mintAddr),      
-    })
-    .signers([owner])
-    .rpc()
-    .then(confirmTx);
+      .depositSpl(new BN(amount * 1 * 10 ** decimals))
+      .accounts({
+        owner: owner.publicKey,
+        auth,
+        vault: splVault,
+        state,
+        ownerAta: ownerAta.address,
+        mint: new PublicKey(mintAddr),
+      })
+      .signers([owner])
+      .rpc()
+      .then(confirmTx);
   });
 
   it("Withdraw SPL", async () => {
@@ -152,27 +161,24 @@ describe("wba_vault", () => {
       connection,
       owner,
       new PublicKey(mintAddr),
-      owner.publicKey,
+      owner.publicKey
     );
     await program.methods
-    .withdrawSpl(new BN(amount * 1 * 10 ** decimals))
-    .accounts({
-      owner: owner.publicKey,
-      auth,
-      vault: splVault,
-      state,
-      ownerAta: ownerAta.address,
-      mint: new PublicKey(mintAddr),      
-    })
-    .signers([owner])
-    .rpc()
-    .then(confirmTx);
+      .withdrawSpl(new BN(amount * 1 * 10 ** decimals))
+      .accounts({
+        owner: owner.publicKey,
+        auth,
+        vault: splVault,
+        state,
+        ownerAta: ownerAta.address,
+        mint: new PublicKey(mintAddr),
+      })
+      .signers([owner])
+      .rpc()
+      .then(confirmTx);
   });
 
-  it("Closes Vaults", async () => {
-
-  });
-
+  it("Closes Vaults", async () => {});
 });
 
 const confirmTx = async (signature: string) => {

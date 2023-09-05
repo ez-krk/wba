@@ -96,6 +96,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@metaplex-foundation/mpl-token-metadata@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@metaplex-foundation/mpl-token-metadata@npm:3.0.0"
+  dependencies:
+    "@metaplex-foundation/mpl-toolbox": ^0.9.0
+  peerDependencies:
+    "@metaplex-foundation/umi": ^0.8.2
+  checksum: 5528c642ee4b4c3a5f5b2dc6e487a61355b30cac794a240f37d1d18fc487b317fb6d41886402952832e28625c22777d4b1a8cb6dd6f2475f4e9ff50e70c027db
+  languageName: node
+  linkType: hard
+
+"@metaplex-foundation/mpl-toolbox@npm:^0.9.0":
+  version: 0.9.0
+  resolution: "@metaplex-foundation/mpl-toolbox@npm:0.9.0"
+  peerDependencies:
+    "@metaplex-foundation/umi": ^0.8.2
+  checksum: e923dbaa79f7b62627fa9e6a6e3aadd24f941c4584b0464cdcff7e526174a9da0b41ba9f026bdb6357df91cc0ca1bf64e8708e86ed590c8c9f3b0170f6c1d6ce
+  languageName: node
+  linkType: hard
+
 "@noble/curves@npm:^1.0.0":
   version: 1.2.0
   resolution: "@noble/curves@npm:1.2.0"
@@ -1971,6 +1991,7 @@ __metadata:
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
     "@coral-xyz/anchor": ^0.28.0
+    "@metaplex-foundation/mpl-token-metadata": ^3.0.0
     "@solana/spl-token": ^0.3.8
     "@solana/web3.js": ^1.78.4
     "@types/bn.js": ^5.1.0
@@ -1979,7 +2000,6 @@ __metadata:
     chai: ^4.3.4
     mocha: ^9.0.3
     prettier: ^2.6.2
-    randombytes: ^2.1.0
     ts-mocha: ^10.0.0
     ts-node: ^10.9.1
     typescript: ^4.3.5

@@ -1,8 +1,8 @@
 import { Connection, Keypair, PublicKey, clusterApiUrl } from "@solana/web3.js";
 import { getOrCreateAssociatedTokenAccount, mintTo } from "@solana/spl-token";
-import { TOKEN_ADDRESS } from "../../constants";
+import { TOKEN_ADDRESS } from "../../../constants";
 
-import wallet from "../../keys/wba-wallet.json";
+import wallet from "../../../keys/wba-wallet.json";
 
 const signer = Keypair.fromSecretKey(new Uint8Array(wallet));
 
@@ -12,20 +12,19 @@ const mint = async () => {
   const tokenAccount = await getOrCreateAssociatedTokenAccount(
     connection,
     signer,
-    new PublicKey("25ZFsHJgbHd2XvJcdndXzo7CgK7CPSecVuKoPJVMTssm"),
+    new PublicKey("9Nw4cjn6fNcidKgqQoTH3igFuCVsLr2vrRSBrBSbYF23"),
     signer.publicKey,
-    false,
-
+    false
   );
   console.log(`token account : ${tokenAccount.address}`);
 
   const transactionSignature = await mintTo(
     connection,
     signer,
-    new PublicKey("25ZFsHJgbHd2XvJcdndXzo7CgK7CPSecVuKoPJVMTssm"),
+    new PublicKey("9Nw4cjn6fNcidKgqQoTH3igFuCVsLr2vrRSBrBSbYF23"),
     tokenAccount.address,
     signer.publicKey,
-    404
+    404 * 1e6
   );
 
   console.log(

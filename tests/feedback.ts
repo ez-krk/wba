@@ -1,8 +1,14 @@
 import * as anchor from "@coral-xyz/anchor";
 import { Program, BN } from "@coral-xyz/anchor";
-import { Commitment, Connection, Keypair, PublicKey, SystemProgram } from "@solana/web3.js";
+import {
+  Commitment,
+  Connection,
+  Keypair,
+  PublicKey,
+  SystemProgram,
+} from "@solana/web3.js";
 import { Feedback } from "../target/types/feedback";
-const crypto = require('crypto');
+const crypto = require("crypto");
 
 const commitment: Commitment = "finalized";
 
@@ -15,7 +21,7 @@ describe("feedback", () => {
   const receiver = new Keypair();
   const reviewer = new Keypair();
 
-  const seed = new BN(crypto.randomBytes(8));
+  const seed = new BN(1);
 
   const session = PublicKey.findProgramAddressSync(
     [Buffer.from("session"), receiver.publicKey.toBuffer()],
@@ -28,10 +34,14 @@ describe("feedback", () => {
   )[0];
 
   const feedback = PublicKey.findProgramAddressSync(
-    [Buffer.from("feedback"), session.toBytes(), receiver.publicKey.toBytes(), seed.toBuffer().reverse()],
+    [
+      Buffer.from("feedback"),
+      // session.toBytes(),
+      reviewer.publicKey.toBytes(),
+      seed.toBuffer("le", 8),
+    ],
     program.programId
   )[0];
-
 
   it("Airdrop", async () => {
     await anchor
@@ -41,7 +51,7 @@ describe("feedback", () => {
         100 * anchor.web3.LAMPORTS_PER_SOL
       )
       .then(confirmTx);
-      await anchor
+    await anchor
       .getProvider()
       .connection.requestAirdrop(
         reviewer.publicKey,
@@ -52,11 +62,15 @@ describe("feedback", () => {
 
   it("Create a new session", async () => {
     await program.methods
-      .newSession("krk.finance", "https://krk.finance/", "blockchain developer guild")
+      .newSession(
+        "krk.finance",
+        "https://krk.finance/",
+        "blockchain developer guild"
+      )
       .accounts({
-       owner: receiver.publicKey,
-       session,
-       systemProgram: SystemProgram.programId,
+        owner: receiver.publicKey,
+        session,
+        systemProgram: SystemProgram.programId,
       })
       .signers([receiver])
       .rpc()
@@ -65,32 +79,35 @@ describe("feedback", () => {
 
   it("Create a new user", async () => {
     await program.methods
-    .newUser()
-    .accounts({
-     owner: reviewer.publicKey,
-     user,
-     systemProgram: SystemProgram.programId,
-    })
-    .signers([reviewer])
-    .rpc()
-    .then(confirmTx);
+      .newUser()
+      .accounts({
+        owner: reviewer.publicKey,
+        user,
+        systemProgram: SystemProgram.programId,
+      })
+      .signers([reviewer])
+      .rpc()
+      .then(confirmTx);
   });
 
   it("Create a new feedback", async () => {
     await program.methods
-    .newFeedback("wtf is krk ?", "the name feels hard to market and related to drugs!", seed)
-    .accounts({
-     owner: reviewer.publicKey,
-     session,
-     user,
-     feedback,
-     systemProgram: SystemProgram.programId,
-    })
-    .signers([reviewer])
-    .rpc()
-    .then(confirmTx);
+      .newFeedback(
+        "wtf is krk ?",
+        "the name feels hard to market and related to drugs!",
+        seed
+      )
+      .accounts({
+        owner: reviewer.publicKey,
+        session,
+        user,
+        feedback,
+        systemProgram: SystemProgram.programId,
+      })
+      .signers([reviewer])
+      .rpc()
+      .then(confirmTx);
   });
-
 });
 
 const confirmTx = async (signature: string) => {

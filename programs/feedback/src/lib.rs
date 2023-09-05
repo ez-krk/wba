@@ -124,18 +124,18 @@ pub struct NewFeedback<'info> {
     )]
     pub user: Account<'info, User>,
     #[account(
-        init,
-        payer = owner,
-        seeds = [b"feedback", session.key().as_ref(), owner.key().as_ref(), seed.to_le_bytes().as_ref()],
-        bump,
-        space = Feedback::LEN
-    )]
-    pub feedback: Account<'info, Feedback>,
-    #[account(
         seeds = [b"session", session.owner.as_ref()],
         bump = session.bump,
     )]
     pub session: Account<'info, Session>,
+    #[account(
+        init,
+        payer = owner,
+        seeds = [b"feedback", owner.key().as_ref(), seed.to_le_bytes().as_ref()],
+        bump,
+        space = Feedback::LEN
+    )]
+    pub feedback: Account<'info, Feedback>,
     pub system_program: Program<'info, System>,
 }
 
