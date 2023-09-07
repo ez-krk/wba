@@ -99,7 +99,7 @@ describe("wba_vault", () => {
       .accounts({
         owner: owner.publicKey,
         auth,
-        vault,
+        solVault : vault,
         state,
         systemProgram: SystemProgram.programId,
       })

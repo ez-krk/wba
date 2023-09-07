@@ -2,6 +2,7 @@ use anchor_lang::prelude::*;
 
 mod constants;
 mod contexts;
+mod errors;
 mod state;
 
 use contexts::*;
@@ -19,12 +20,4 @@ pub mod form {
     pub fn new_answer(ctx: Context<NewAnswers>, input: Vec<String>) -> Result<()> {
         ctx.accounts.new_answers(&ctx.bumps, input)
     }
-}
-
-#[error_code]
-pub enum ErrorCode {
-    #[msg("The provided name should be 50 characters long maximum")]
-    NameTooLong,
-    #[msg("The provided content should be 280 characters long maximum")]
-    ContentTooLong,
 }

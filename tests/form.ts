@@ -4,7 +4,6 @@ import {
   Commitment,
   Connection,
   Keypair,
-  LAMPORTS_PER_SOL,
   PublicKey,
   SystemProgram,
 } from "@solana/web3.js";
@@ -108,13 +107,6 @@ describe("feedback", () => {
       .signers([sender])
       .rpc()
       .then(confirmTx);
-  });
-
-  it("Cost", async () => {
-    const receiverBalance = await anchor.getProvider().connection.getBalance(receiver.publicKey);
-    const reviewerBalance = await anchor.getProvider().connection.getBalance(receiver.publicKey);
-    console.log("receiver new balance : ", receiverBalance / LAMPORTS_PER_SOL)
-    console.log("reviewer new balance : ", reviewerBalance / LAMPORTS_PER_SOL)
   });
 });
 
