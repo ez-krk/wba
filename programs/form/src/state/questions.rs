@@ -8,6 +8,7 @@ pub struct Questions {
     pub questions: Vec<String>,
     pub participants: u64,
     pub created_at: i64,
+    pub seed: u64,
     pub bump: u8,
 }
 

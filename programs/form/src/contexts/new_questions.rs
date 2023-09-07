@@ -3,14 +3,14 @@ use anchor_lang::prelude::*;
 use std::collections::BTreeMap;
 
 #[derive(Accounts)]
-#[instruction(input: Vec<String>, seeds: u64)]
+#[instruction(input: Vec<String>, seed: u64)]
 pub struct NewQuestions<'info> {
     #[account(mut)]
     pub owner: Signer<'info>,
     #[account(
         init,
         payer = owner,
-        seeds = [b"questions", owner.key().as_ref(), seeds.to_le_bytes().as_ref()],
+        seeds = [b"questions", owner.key().as_ref(), seed.to_le_bytes().as_ref()],
         bump,
         space = Questions::LEN + ((STRING_LENGTH_PREFIX + MAX_QUESTION_LENGTH) * input.len())
     )]
@@ -23,10 +23,12 @@ impl<'info> NewQuestions<'info> {
         &mut self,
         bumps: &BTreeMap<String, u8>,
         input: Vec<String>,
+        seed: u64,
     ) -> Result<()> {
         let questions = &mut self.questions;
         questions.bump = *bumps.get("questions").unwrap();
         questions.owner = self.owner.key();
+        questions.seed = seed;
         for x in input.iter() {
             if x.len() > MAX_QUESTION_LENGTH {
                 return err!(ErrorCode::QuestionTooLong);

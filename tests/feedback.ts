@@ -19,18 +19,18 @@ describe("feedback", () => {
   const program = anchor.workspace.Feedback as Program<Feedback>;
   const connection: Connection = anchor.getProvider().connection;
 
-  const receiver = new Keypair();
-  const sender = new Keypair();
+  const initializer = new Keypair();
+  const user = new Keypair();
 
   const seed = new BN(1);
 
   const session = PublicKey.findProgramAddressSync(
-    [Buffer.from("session"), receiver.publicKey.toBuffer()],
+    [Buffer.from("session"), initializer.publicKey.toBuffer()],
     program.programId
   )[0];
 
-  const user = PublicKey.findProgramAddressSync(
-    [Buffer.from("user"), sender.publicKey.toBuffer()],
+  const userPDA = PublicKey.findProgramAddressSync(
+    [Buffer.from("user"), user.publicKey.toBuffer()],
     program.programId
   )[0];
 
@@ -38,7 +38,7 @@ describe("feedback", () => {
     [
       Buffer.from("feedback"),
       // session.toBytes(),
-      sender.publicKey.toBytes(),
+      user.publicKey.toBytes(),
       seed.toBuffer("le", 8),
     ],
     program.programId
@@ -48,14 +48,14 @@ describe("feedback", () => {
     await anchor
       .getProvider()
       .connection.requestAirdrop(
-        receiver.publicKey,
+        initializer.publicKey,
         100 * anchor.web3.LAMPORTS_PER_SOL
       )
       .then(confirmTx);
     await anchor
       .getProvider()
       .connection.requestAirdrop(
-        sender.publicKey,
+        user.publicKey,
         100 * anchor.web3.LAMPORTS_PER_SOL
       )
       .then(confirmTx);
@@ -69,11 +69,11 @@ describe("feedback", () => {
         "blockchain developer guild"
       )
       .accounts({
-        owner: receiver.publicKey,
+        owner: initializer.publicKey,
         session,
         systemProgram: SystemProgram.programId,
       })
-      .signers([receiver])
+      .signers([initializer])
       .rpc()
       .then(confirmTx);
   });
@@ -82,11 +82,11 @@ describe("feedback", () => {
     await program.methods
       .newUser()
       .accounts({
-        owner: sender.publicKey,
-        user,
+        owner: user.publicKey,
+        user: userPDA,
         systemProgram: SystemProgram.programId,
       })
-      .signers([sender])
+      .signers([user])
       .rpc()
       .then(confirmTx);
   });
@@ -99,22 +99,29 @@ describe("feedback", () => {
         seed
       )
       .accounts({
-        owner: sender.publicKey,
+        owner: user.publicKey,
         session,
-        user,
+        user: userPDA,
         feedback,
         systemProgram: SystemProgram.programId,
       })
-      .signers([sender])
+      .signers([user])
       .rpc()
       .then(confirmTx);
   });
 
   it("Cost", async () => {
-    const receiverBalance = await anchor.getProvider().connection.getBalance(receiver.publicKey);
-    const reviewerBalance = await anchor.getProvider().connection.getBalance(receiver.publicKey);
-    console.log("receiver new balance : ", receiverBalance / LAMPORTS_PER_SOL)
-    console.log("reviewer new balance : ", reviewerBalance / LAMPORTS_PER_SOL)
+    const receiverBalance = await anchor
+      .getProvider()
+      .connection.getBalance(initializer.publicKey);
+    const userBalance = await anchor
+      .getProvider()
+      .connection.getBalance(user.publicKey);
+    console.log(
+      "initializer new balance : ",
+      receiverBalance / LAMPORTS_PER_SOL
+    );
+    console.log("user new balance : ", userBalance / LAMPORTS_PER_SOL);
   });
 });
 

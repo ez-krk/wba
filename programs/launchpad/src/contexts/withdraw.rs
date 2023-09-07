@@ -16,14 +16,14 @@ pub struct Withdraw<'info> {
     owner_ata: Account<'info, TokenAccount>,
     mint: Account<'info, Mint>,
     #[account(
-        seeds = [b"auth", state.key().as_ref()],
-        bump = state.auth_bump
+        seeds = [b"auth", launchpad.key().as_ref()],
+        bump = launchpad.auth_bump
     )]
     /// CHECK: This is safe
     auth: UncheckedAccount<'info>,
     #[account(
         mut,
-        seeds = [b"spl_vault", state.key().as_ref()],
+        seeds = [b"spl_vault", launchpad.key().as_ref()],
         token::mint = mint,
         token::authority = auth,
         bump
@@ -31,9 +31,9 @@ pub struct Withdraw<'info> {
     vault: Account<'info, TokenAccount>,
     #[account(
         seeds = [b"state", owner.key().as_ref()],
-        bump = state.launchpad_bump
+        bump = launchpad.launchpad_bump
     )]
-    state: Account<'info, Launchpad>,
+    launchpad: Account<'info, Launchpad>,
     token_program: Program<'info, Token>,
     associated_token_program: Program<'info, AssociatedToken>,
     system_program: Program<'info, System>,
@@ -48,8 +48,8 @@ impl<'info> Withdraw<'info> {
 
         let seeds = &[
             b"auth",
-            self.state.to_account_info().key.as_ref(),
-            &[self.state.auth_bump],
+            self.launchpad.to_account_info().key.as_ref(),
+            &[self.launchpad.auth_bump],
         ];
 
         let signer_seeds = &[&seeds[..]];

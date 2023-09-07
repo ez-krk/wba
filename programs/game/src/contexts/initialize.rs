@@ -3,10 +3,10 @@ use crate::state::Game;
 use anchor_lang::prelude::*;
 
 use anchor_spl::{
-    metadata::{create_metadata_accounts_v3, CreateMetadataAccountsV3, Metadata},
+    metadata::{create_metadata_accounts_v3, CreateMetadataAccountsV3, Metadata, MetadataAccount},
     token::{Mint, Token},
 };
-use mpl_token_metadata::{pda::find_metadata_account, state::DataV2};
+use mpl_token_metadata::state::DataV2;
 use std::collections::BTreeMap;
 
 #[derive(Accounts)]
@@ -36,12 +36,20 @@ pub struct Initialize<'info> {
     ///CHECK: Using "address" constraint to validate metadata account address
     #[account(
         mut,
-        address=find_metadata_account(&mint.key()).0
+        seeds = [
+            b"metadata",
+            metadata_program.key().as_ref(),
+            mint.key().as_ref()
+        ],
+        bump,
+        seeds::program = metadata_program.key()
     )]
+    /// CHECK: 
     pub metadata_account: UncheckedAccount<'info>,
 
     pub token_program: Program<'info, Token>,
     pub token_metadata_program: Program<'info, Metadata>,
+    pub metadata_program: Program<'info, Metadata>,
     pub system_program: Program<'info, System>,
     pub rent: Sysvar<'info, Rent>,
 }
@@ -68,15 +76,15 @@ impl<'info> Initialize<'info> {
         symbol: String,
     ) -> Result<()> {
         // PDA seeds and bump to "sign" for CPI
-        let seeds: &[u8; 6] = b"reward";
+        let seeds: &[u8; 4] = b"mint";
         let bump: u8 = *bumps.get("mint").unwrap();
         let signer: &[&[&[u8]]] = &[&[seeds, &[bump]]];
 
         // On-chain token metadata for the mint
         let data_v2: DataV2 = DataV2 {
-            name: name,
-            symbol: symbol,
-            uri: uri,
+            name,
+            symbol,
+            uri,
             seller_fee_basis_points: 0,
             creators: None,
             collection: None,

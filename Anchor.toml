@@ -7,7 +7,7 @@ escrow = "KRKA3ugDP5iE79zDuLQEs6qCvY7eSRYbS94vgsTgRU2"
 feedback = "FEEDLQWp85GJBrum4ASAR6WEAW595oQfaST1N84HZFbS"
 launchpad = "KRKATotRqvLrvEjyeGKeBsR5W5UQxe29Ap2kLgwRcC7"
 form = "DEVK1cQcDUsCwnE1rZvKvEeg4GmPo4SSfmV3cb1TEw2u"
-amm= "AMMwzryp5mKRy6nCn9bGor4vGAhuqsZaLsqkGDnvkVds"
+# amm = "AMMwzryp5mKRy6nCn9bGor4vGAhuqsZaLsqkGDnvkVds"
 
 [test.validator]
 url = "https://api.mainnet-beta.solana.com"
@@ -23,4 +23,4 @@ cluster = "Localnet"
 wallet = "/home/dev/.config/solana/id.json"
 
 [scripts]
-test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/feedback.ts"
+test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/form.ts"

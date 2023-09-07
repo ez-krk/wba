@@ -7,39 +7,34 @@ import {
   PublicKey,
   SystemProgram,
 } from "@solana/web3.js";
-import { Feedback } from "../target/types/feedback";
+import { Form } from "../target/types/form";
 const crypto = require("crypto");
 
 const commitment: Commitment = "finalized";
 
-describe("feedback", () => {
+describe("form", () => {
   // Configure the client to use the local cluster.
   anchor.setProvider(anchor.AnchorProvider.env());
-  const program = anchor.workspace.Feedback as Program<Feedback>;
+  const program = anchor.workspace.Form as Program<Form>;
   const connection: Connection = anchor.getProvider().connection;
 
-  const receiver = new Keypair();
-  const sender = new Keypair();
+  const initializer = new Keypair();
+  const user = new Keypair();
 
   const seed = new BN(1);
 
-  const session = PublicKey.findProgramAddressSync(
-    [Buffer.from("session"), receiver.publicKey.toBuffer()],
-    program.programId
-  )[0];
-
-  const user = PublicKey.findProgramAddressSync(
-    [Buffer.from("user"), sender.publicKey.toBuffer()],
-    program.programId
-  )[0];
-
-  const feedback = PublicKey.findProgramAddressSync(
+  const questions = PublicKey.findProgramAddressSync(
     [
-      Buffer.from("feedback"),
+      Buffer.from("questions"),
       // session.toBytes(),
-      sender.publicKey.toBytes(),
+      initializer.publicKey.toBytes(),
       seed.toBuffer("le", 8),
     ],
+    program.programId
+  )[0];
+
+  const answers = PublicKey.findProgramAddressSync(
+    [Buffer.from("answers"), questions.toBuffer(), user.publicKey.toBuffer()],
     program.programId
   )[0];
 
@@ -47,64 +42,42 @@ describe("feedback", () => {
     await anchor
       .getProvider()
       .connection.requestAirdrop(
-        receiver.publicKey,
+        initializer.publicKey,
         100 * anchor.web3.LAMPORTS_PER_SOL
       )
       .then(confirmTx);
     await anchor
       .getProvider()
       .connection.requestAirdrop(
-        sender.publicKey,
+        user.publicKey,
         100 * anchor.web3.LAMPORTS_PER_SOL
       )
       .then(confirmTx);
   });
 
-  it("Create a new session", async () => {
+  it("Create questions", async () => {
     await program.methods
-      .newSession(
-        "krk.finance",
-        "https://krk.finance/",
-        "blockchain developer guild"
-      )
+      .newQuestions(["sign-in /w twitter", "sign-in /w discord"], seed)
       .accounts({
-        owner: receiver.publicKey,
-        session,
+        owner: initializer.publicKey,
+        questions,
         systemProgram: SystemProgram.programId,
       })
-      .signers([receiver])
+      .signers([initializer])
       .rpc()
       .then(confirmTx);
   });
 
-  it("Create a new user", async () => {
+  it("Create answers", async () => {
     await program.methods
-      .newUser()
+      .newAnswers(["beep boop", "test"])
       .accounts({
-        owner: sender.publicKey,
-        user,
+        owner: user.publicKey,
+        questions,
+        answers,
         systemProgram: SystemProgram.programId,
       })
-      .signers([sender])
-      .rpc()
-      .then(confirmTx);
-  });
-
-  it("Create a new feedback", async () => {
-    await program.methods
-      .newFeedback(
-        "wtf is krk ?",
-        "the name feels hard to market and related to drugs!",
-        seed
-      )
-      .accounts({
-        owner: sender.publicKey,
-        session,
-        user,
-        feedback,
-        systemProgram: SystemProgram.programId,
-      })
-      .signers([sender])
+      .signers([user])
       .rpc()
       .then(confirmTx);
   });

@@ -1,4 +1,4 @@
-use crate::state::{Launchpad, User};
+use crate::{errors::ErrorCode, state::{Launchpad, User}};
 
 use anchor_lang::prelude::*;
 use anchor_lang::system_program::{transfer, Transfer};
@@ -7,10 +7,10 @@ use anchor_lang::system_program::{transfer, Transfer};
 #[instruction(amount: u64)]
 pub struct Payment<'info> {
     #[account(mut)]
-    owner: Signer<'info>,
+    signer: Signer<'info>,
     #[account(
         init_if_needed,
-        payer = owner,
+        payer = signer,
         seeds = [b"user", launchpad.key().as_ref()],
         space = User::LEN,
         bump
@@ -23,7 +23,7 @@ pub struct Payment<'info> {
     )]
     sol_vault: SystemAccount<'info>,
     #[account(
-        seeds = [b"launchpad", owner.key().as_ref()],
+        seeds = [b"launchpad", launchpad.owner.key().as_ref()],
         bump = launchpad.launchpad_bump
     )]
     launchpad: Account<'info, Launchpad>,
@@ -32,12 +32,15 @@ pub struct Payment<'info> {
 
 impl<'info> Payment<'info> {
     pub fn deposit(&mut self, amount: u64) -> Result<()> {
+        if self.signer.key() == self.launchpad.owner {
+            return err!(ErrorCode::InstructionNotForOwner);
+        }
         let user = &mut self.user;
-        user.user = self.owner.key();
+        user.user = self.signer.key();
         user.launchpad = self.launchpad.key();
         user.deposit += amount;
         let accounts = Transfer {
-            from: self.owner.to_account_info(),
+            from: self.signer.to_account_info(),
             to: self.sol_vault.to_account_info(),
         };
 
@@ -47,9 +50,12 @@ impl<'info> Payment<'info> {
     }
 
     pub fn withdraw(&mut self, amount: u64) -> Result<()> {
+        if self.signer.key() != self.launchpad.owner {
+            return err!(ErrorCode::InstructionOwnerOnly);
+        }
         let accounts = Transfer {
             from: self.sol_vault.to_account_info(),
-            to: self.owner.to_account_info(),
+            to: self.signer.to_account_info(),
         };
 
         let seeds = &[

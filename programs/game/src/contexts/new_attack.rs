@@ -60,13 +60,13 @@ impl<'info> NewAttack<'info> {
 pub fn check_shield(tz: i64) -> bool {
     let clock = Clock::get().unwrap();
     let current_timestamp = clock.unix_timestamp;
-    let mut result: bool;
+    let mut shield: bool = true;
     if current_timestamp > tz {
         msg!("Shield over !");
-        return false;
+        shield = false;
     } else if current_timestamp < tz {
         msg!("Shield active !");
-        return true;
+        shield = true;
     }
-    result
+    shield
 }

@@ -13,11 +13,11 @@ declare_id!("DEVK1cQcDUsCwnE1rZvKvEeg4GmPo4SSfmV3cb1TEw2u");
 pub mod form {
     use super::*;
 
-    pub fn new_form(ctx: Context<NewQuestions>, input: Vec<String>) -> Result<()> {
-        ctx.accounts.new_questions(&ctx.bumps, input)
+    pub fn new_questions(ctx: Context<NewQuestions>, input: Vec<String>, seed: u64) -> Result<()> {
+        ctx.accounts.new_questions(&ctx.bumps, input, seed)
     }
 
-    pub fn new_answer(ctx: Context<NewAnswers>, input: Vec<String>) -> Result<()> {
+    pub fn new_answers(ctx: Context<NewAnswers>, input: Vec<String>) -> Result<()> {
         ctx.accounts.new_answers(&ctx.bumps, input)
     }
 }
