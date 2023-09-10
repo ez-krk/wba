@@ -10,7 +10,7 @@ use contexts::*;
 declare_id!("CCLnXJAJYFjCHLCugpBCEQKrpiSApiRM4UxkBUHJRrv4");
 
 #[program]
-pub mod anchor_token {
+pub mod game {
     use super::*;
 
     pub fn create_game(

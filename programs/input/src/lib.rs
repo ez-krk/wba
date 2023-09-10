@@ -10,7 +10,7 @@ use contexts::*;
 declare_id!("DEVK1cQcDUsCwnE1rZvKvEeg4GmPo4SSfmV3cb1TEw2u");
 
 #[program]
-pub mod form {
+pub mod input {
     use super::*;
 
     pub fn new_questions(ctx: Context<NewQuestions>, input: Vec<String>, seed: u64) -> Result<()> {

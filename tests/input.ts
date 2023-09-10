@@ -7,15 +7,15 @@ import {
   PublicKey,
   SystemProgram,
 } from "@solana/web3.js";
-import { Form } from "../target/types/form";
+import { Input } from "../target/types/input";
 const crypto = require("crypto");
 
 const commitment: Commitment = "finalized";
 
-describe("form", () => {
+describe("input", () => {
   // Configure the client to use the local cluster.
   anchor.setProvider(anchor.AnchorProvider.env());
-  const program = anchor.workspace.Form as Program<Form>;
+  const program = anchor.workspace.Input as Program<Input>;
   const connection: Connection = anchor.getProvider().connection;
 
   const initializer = new Keypair();

@@ -9,7 +9,7 @@ import {
   BN,
 } from "@coral-xyz/anchor";
 
-import wallet from "../keys/wba-wallet.json";
+import wallet from "../../../keys/wba-wallet.json";
 import {
   getOrCreateAssociatedTokenAccount,
   TOKEN_PROGRAM_ID,
