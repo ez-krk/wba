@@ -1,15 +1,18 @@
 [features]
 seeds = false
 skip-lint = false
-# [programs.devnet]
-# input = "DEVK1cQcDUsCwnE1rZvKvEeg4GmPo4SSfmV3cb1TEw2u"
+[programs.devnet]
+input = "DEVK1cQcDUsCwnE1rZvKvEeg4GmPo4SSfmV3cb1TEw2u"
+pastebin = "KRKTFYKLDDLMtYFLGZhkCLgZcorCmXmNG79BVtfm9Lp"
+
 [programs.localnet]
 wba_vault = "VG58thf3atpUtDia6NUiJJeJLuHMy2z5CRiTBPXLzwT"
 escrow = "KRKA3ugDP5iE79zDuLQEs6qCvY7eSRYbS94vgsTgRU2"
 feedback = "FEEDLQWp85GJBrum4ASAR6WEAW595oQfaST1N84HZFbS"
 launchpad = "KRKATotRqvLrvEjyeGKeBsR5W5UQxe29Ap2kLgwRcC7"
 input = "DEVK1cQcDUsCwnE1rZvKvEeg4GmPo4SSfmV3cb1TEw2u"
-pastebin = "KRKwxs7rsAaeo6oULCnqdhEYQeXvwW6CX9jrHZSyX9y"
+pastebin = "KRKTFYKLDDLMtYFLGZhkCLgZcorCmXmNG79BVtfm9Lp"
+game= "KRKMSj1XSgTkjVgHey9DSo5PxC2Z7AoUY48rzcjHyMo"
 # amm = "AMMwzryp5mKRy6nCn9bGor4vGAhuqsZaLsqkGDnvkVds"
 
 [test.validator]
@@ -22,7 +25,7 @@ address = "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s"
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "Localnet"
+cluster = "devnet"
 wallet = "/home/dev/.config/solana/id.json"
 
 [scripts]

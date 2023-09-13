@@ -30,7 +30,7 @@ pub struct NewPlayer<'info> {
 
 impl<'info> NewPlayer<'info> {
     pub fn new_player(&mut self, bumps: &BTreeMap<String, u8>, x: u8, y: u8) -> Result<()> {
-        if (x < 0 || y < 0) || (x > GRID_SIZE || y > GRID_SIZE) {
+        if x > GRID_SIZE || y > GRID_SIZE  {
             return err!(ErrorCode::OutOfBounds);
         }
         let game = &mut self.game;

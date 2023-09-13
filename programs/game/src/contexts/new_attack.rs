@@ -45,6 +45,7 @@ impl<'info> NewAttack<'info> {
                         attack.started_at = Clock::get()?.unix_timestamp;
                         attack.player = player.player.key();
                         attack.target = target.player.key();
+                        attack.resolved = false;
                     } else {
                         return err!(ErrorCode::TargetShielded);
                     }

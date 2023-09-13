@@ -5,6 +5,7 @@ import {
   createMint,
   getOrCreateAssociatedTokenAccount,
   mintTo,
+  TOKEN_PROGRAM_ID,
 } from "@solana/spl-token";
 import {
   Commitment,
@@ -13,40 +14,25 @@ import {
   PublicKey,
   SystemProgram,
 } from "@solana/web3.js";
-import { WbaVault } from "../target/types/wba_vault";
+import { Game } from "../target/types/game";
 
 const commitment: Commitment = "finalized";
 
-describe("wba_vault", () => {
+describe("game", () => {
   // Configure the client to use the local cluster.
   anchor.setProvider(anchor.AnchorProvider.env());
 
   const connection: Connection = anchor.getProvider().connection;
   const owner = new Keypair();
-  const program = anchor.workspace.WbaVault as Program<WbaVault>;
+  const program = anchor.workspace.Game as Program<Game>;
 
-  const decimals = 6;
-  const amount = 100;
-
-  const mint = Keypair.generate();
-
-  let mintAddr: string;
-
-  const state = PublicKey.findProgramAddressSync(
-    [Buffer.from("state"), owner.publicKey.toBuffer()],
-    program.programId
-  )[0];
-  const vault = PublicKey.findProgramAddressSync(
-    [Buffer.from("vault"), state.toBytes()],
-    program.programId
-  )[0];
-  const splVault = PublicKey.findProgramAddressSync(
-    [Buffer.from("spl_vault"), state.toBytes()],
+  const game = PublicKey.findProgramAddressSync(
+    [Buffer.from("game")],
     program.programId
   )[0];
 
-  const auth = PublicKey.findProgramAddressSync(
-    [Buffer.from("auth"), state.toBytes()],
+  const mint = PublicKey.findProgramAddressSync(
+    [Buffer.from("mint")],
     program.programId
   )[0];
 
@@ -60,47 +46,18 @@ describe("wba_vault", () => {
       .then(confirmTx);
   });
 
-  it("Create a new mint, creates an ATA and mints 100 tokens to our account", async () => {
-    let token = await createMint(
-      connection,
-      owner,
-      owner.publicKey,
-      owner.publicKey,
-      decimals,
-      mint
-    );
-    console.log("Token : ", token.toBase58());
-    mintAddr = token.toBase58();
-    let fromAta = await getOrCreateAssociatedTokenAccount(
-      connection,
-      owner,
-      token,
-      owner.publicKey
-    );
-    console.log("ATA : ", fromAta.address.toBase58());
-    let sendToken = await mintTo(
-      connection,
-      owner,
-      token,
-      fromAta.address,
-      owner.publicKey,
-      amount * 1 * 10 ** decimals
-    );
-    console.log(`https://explorer.solana.com/tx/${sendToken}?cluster=devnet`);
-    let tokenAmount = await connection.getTokenAccountBalance(fromAta.address);
-    console.log(
-      `minted ${tokenAmount.value.uiAmountString} ${token.toBase58()} tokens`
-    );
-  });
-
   it("Initialize", async () => {
     await program.methods
-      .initialize()
+      .initialize("", "KRK.FINANCE", "KRK")
       .accounts({
         owner: owner.publicKey,
-        auth,
-        solVault: vault,
-        state,
+        game,
+        mint,
+        metadataAccount,
+        tokenProgram: TOKEN_PROGRAM_ID,
+        tokenMetadataProgram: new PublicKey(
+          "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s"
+        ),
         systemProgram: SystemProgram.programId,
       })
       .signers([owner])

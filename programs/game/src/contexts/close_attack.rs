@@ -89,10 +89,10 @@ impl<'info> CloseAttack<'info> {
                         let amount = (1u64)
                             .checked_mul(target.kills * 10u64.pow(self.mint.decimals as u32))
                             .unwrap();
-                        mint_to(cpi_ctx, amount);
                         player.kills += 1;
                         game.alive -= 1;
                         game.dead += 1;
+                        mint_to(cpi_ctx, amount)?;
                     // we don't kill, we sub 10 hp
                     } else if target.health.checked_sub(10).unwrap() > 0 {
                         target.health = target.health.checked_sub(10).unwrap();

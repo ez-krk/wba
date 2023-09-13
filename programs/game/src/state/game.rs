@@ -1,8 +1,11 @@
 use anchor_lang::prelude::*;
 
+use crate::constants::*;
+
 #[account]
 pub struct Game {
     pub mint: Pubkey,
+    pub initialized: bool,
     pub alive: u64,
     pub dead: u64,
     pub token_minted: u64,
@@ -14,5 +17,5 @@ pub struct Game {
 }
 
 impl Game {
-    pub const LEN: usize = 8 + 8 + 8 + 8 + 8 + 8;
+    pub const LEN: usize = 8 + PUBLIC_KEY_LENGTH + 1 + (8 * 4) + (1 * 3);
 }

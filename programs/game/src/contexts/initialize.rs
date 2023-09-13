@@ -44,7 +44,7 @@ pub struct Initialize<'info> {
         bump,
         seeds::program = metadata_program.key()
     )]
-    /// CHECK: 
+    /// CHECK: metaplex will check this
     pub metadata_account: UncheckedAccount<'info>,
 
     pub token_program: Program<'info, Token>,
@@ -68,50 +68,50 @@ impl<'info> Initialize<'info> {
         Ok(())
     }
 
-    pub fn create_mint(
-        &self,
-        bumps: &BTreeMap<String, u8>,
-        uri: String,
-        name: String,
-        symbol: String,
-    ) -> Result<()> {
-        // PDA seeds and bump to "sign" for CPI
-        let seeds: &[u8; 4] = b"mint";
-        let bump: u8 = *bumps.get("mint").unwrap();
-        let signer: &[&[&[u8]]] = &[&[seeds, &[bump]]];
+    // pub fn create_mint(
+    //     &self,
+    //     bumps: &BTreeMap<String, u8>,
+    //     uri: String,
+    //     name: String,
+    //     symbol: String,
+    // ) -> Result<()> {
+    //     // PDA seeds and bump to "sign" for CPI
+    //     let seeds: &[u8; 4] = b"mint";
+    //     let bump: u8 = *bumps.get("mint").unwrap();
+    //     let signer: &[&[&[u8]]] = &[&[seeds, &[bump]]];
 
-        // On-chain token metadata for the mint
-        let data_v2: DataV2 = DataV2 {
-            name,
-            symbol,
-            uri,
-            seller_fee_basis_points: 0,
-            creators: None,
-            collection: None,
-            uses: None,
-        };
+    //     // On-chain token metadata for the mint
+    //     let data_v2: DataV2 = DataV2 {
+    //         name,
+    //         symbol,
+    //         uri,
+    //         seller_fee_basis_points: 0,
+    //         creators: None,
+    //         collection: None,
+    //         uses: None,
+    //     };
 
-        // CPI Context
-        let cpi_ctx = CpiContext::new_with_signer(
-            self.token_metadata_program.to_account_info(),
-            CreateMetadataAccountsV3 {
-                metadata: self.metadata_account.to_account_info(), // the metadata account being created
-                mint: self.mint.to_account_info(), // the mint account of the metadata account
-                mint_authority: self.mint.to_account_info(), // the mint authority of the mint account
-                update_authority: self.mint.to_account_info(), // the update authority of the metadata account
-                payer: self.owner.to_account_info(), // the payer for creating the metadata account
-                system_program: self.system_program.to_account_info(), // the system program account
-                rent: self.rent.to_account_info(),   // the rent sysvar account
-            },
-            signer,
-        );
+    //     // CPI Context
+    //     let cpi_ctx = CpiContext::new_with_signer(
+    //         self.token_metadata_program.to_account_info(),
+    //         CreateMetadataAccountsV3 {
+    //             metadata: self.metadata_account.to_account_info(), // the metadata account being created
+    //             mint: self.mint.to_account_info(), // the mint account of the metadata account
+    //             mint_authority: self.mint.to_account_info(), // the mint authority of the mint account
+    //             update_authority: self.mint.to_account_info(), // the update authority of the metadata account
+    //             payer: self.owner.to_account_info(), // the payer for creating the metadata account
+    //             system_program: self.system_program.to_account_info(), // the system program account
+    //             rent: self.rent.to_account_info(),   // the rent sysvar account
+    //         },
+    //         signer,
+    //     );
 
-        create_metadata_accounts_v3(
-            cpi_ctx, // cpi context
-            data_v2, // token metadata
-            true,    // is_mutable
-            true,    // update_authority_is_signer
-            None,    // collection details
-        )
-    }
+    //     create_metadata_accounts_v3(
+    //         cpi_ctx, // cpi context
+    //         data_v2, // token metadata
+    //         true,    // is_mutable
+    //         true,    // update_authority_is_signer
+    //         None,    // collection details
+    //     )
+    // }
 }

@@ -33,7 +33,7 @@ pub struct Heal<'info> {
 
     #[account(
         mut,
-        seeds = [b"reward"],
+        seeds = [b"mint"],
         bump,
     )]
     pub mint: Account<'info, Mint>,

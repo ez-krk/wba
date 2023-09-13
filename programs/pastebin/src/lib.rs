@@ -7,7 +7,7 @@ mod state;
 
 use contexts::*;
 
-declare_id!("KRKwxs7rsAaeo6oULCnqdhEYQeXvwW6CX9jrHZSyX9y");
+declare_id!("KRKTFYKLDDLMtYFLGZhkCLgZcorCmXmNG79BVtfm9Lp");
 
 #[program]
 pub mod pastebin {
