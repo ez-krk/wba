@@ -34,4 +34,8 @@ pub mod sombrero {
     pub fn register_hacker(ctx: Context<RegisterHacker>, name: String) -> Result<()> {
         ctx.accounts.register_hacker(&ctx.bumps, name)
     }
+
+    pub fn new_hack(ctx: Context<NewHack>, amount: u64, seed: u64) -> Result<()> {
+        ctx.accounts.new_hack(&ctx.bumps, amount, seed)
+    }
 }
