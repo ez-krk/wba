@@ -1,11 +1,11 @@
-use crate::state::{Hack, Hacker, Protocol};
+use crate::state::{Hacker, Protocol, SolHack};
 use anchor_lang::prelude::*;
 use anchor_lang::system_program::{transfer, Transfer};
 use std::collections::BTreeMap;
 
 #[derive(Accounts)]
 #[instruction(amount: u64, seed: u64)]
-pub struct NewHack<'info> {
+pub struct NewSolHack<'info> {
     #[account(mut)]
     pub signer: Signer<'info>,
     #[account()]
@@ -32,17 +32,23 @@ pub struct NewHack<'info> {
         payer = signer,
         seeds = [b"hack", protocol.key().as_ref(), hacker.key().as_ref(), seed.to_le_bytes().as_ref()],
         bump,
-        space = Hack::LEN
+        space = SolHack::LEN
     )]
-    pub hack: Account<'info, Hack>,
+    pub hack: Account<'info, SolHack>,
     pub system_program: Program<'info, System>,
 }
 
-impl<'info> NewHack<'info> {
-    pub fn new_hack(&mut self, bumps: &BTreeMap<String, u8>, amount: u64, seed: u64) -> Result<()> {
+impl<'info> NewSolHack<'info> {
+    pub fn new_sol_hack(
+        &mut self,
+        bumps: &BTreeMap<String, u8>,
+        amount: u64,
+        seed: u64,
+    ) -> Result<()> {
         // pub payout: Pubkey,
         // pub protocol: Pubkey,
         // pub hacker: Pubkey,
+        // pub value: u64,
         // pub reviewed: bool,
         // pub created_at: i64,
         // pub bump: u8,
@@ -52,6 +58,8 @@ impl<'info> NewHack<'info> {
 
         hack.payout = self.payout.key();
         hack.protocol = self.protocol.key();
+        hack.hacker = self.hacker.key();
+        hack.value = amount;
         hack.bump = *bumps.get("vulnerability").unwrap();
         hack.created_at = Clock::get().unwrap().unix_timestamp;
         hack.seed = seed;

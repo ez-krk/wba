@@ -16,7 +16,7 @@ pub mod sombrero {
     pub fn register_protocol(
         ctx: Context<RegisterProtocol>,
         name: String,
-        percent: u8,
+        percent: u64,
         gpg_pubkey: String,
     ) -> Result<()> {
         ctx.accounts
@@ -35,7 +35,11 @@ pub mod sombrero {
         ctx.accounts.register_hacker(&ctx.bumps, name)
     }
 
-    pub fn new_hack(ctx: Context<NewHack>, amount: u64, seed: u64) -> Result<()> {
-        ctx.accounts.new_hack(&ctx.bumps, amount, seed)
+    pub fn new_sol_hack(ctx: Context<NewSolHack>, amount: u64, seed: u64) -> Result<()> {
+        ctx.accounts.new_sol_hack(&ctx.bumps, amount, seed)
+    }
+
+    pub fn approve_sol_hack(ctx: Context<ApproveSolHack>) -> Result<()> {
+        ctx.accounts.approve_sol_hack()
     }
 }

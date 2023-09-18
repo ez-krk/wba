@@ -47,7 +47,7 @@ impl<'info> RegisterProtocol<'info> {
         &mut self,
         bumps: &BTreeMap<String, u8>,
         name: String,
-        percent: u8,
+        percent: u64,
         gpg_pubkey: String,
     ) -> Result<()> {
         if name.len() > MAX_PROTOCOL_LENGTH {
