@@ -6,10 +6,16 @@ pub enum ErrorCode {
     ProtocolNameEmpty,
     #[msg("Protocol Name Too Long, 50 Characters Maximum.")]
     ProtocolNameTooLong,
-    #[msg("Answer too long, 280 characters maximum.")]
-    AnswerTooLong,
-    #[msg("Answer empty.")]
-    AnswerEmpty,
-    #[msg("Form Incompletey.")]
-    FormIncomplete,
+    #[msg("Hacker Name Empty.")]
+    HackerNameEmpty,
+    #[msg("Hacker Name Too Long, 50 Characters Maximum.")]
+    HackerNameTooLong,
+    #[msg("GPG Key Empty.")]
+    GPGKeyEmpty,
+    #[msg("GPG Key Too Small, 2048 Characters Min.")]
+    GPGKeyTooSmall,
+    #[msg("GPG Key Too Big, 4096 characters maximum.")]
+    GPGKeyTooBig,
+    #[msg("Message empty.")]
+    MessageEmpty,
 }

@@ -13,17 +13,25 @@ declare_id!("SMBKnshAzPi9WZQEUyRxsm6PYZbyZEmxbxbaoMWNHkA");
 pub mod sombrero {
     use super::*;
 
-    pub fn register_protocol(ctx: Context<RegisterProtocol>, name: String) -> Result<()> {
-        ctx.accounts.register_protocol(&ctx.bumps, name)
+    pub fn register_protocol(
+        ctx: Context<RegisterProtocol>,
+        name: String,
+        percent: u8,
+        gpg_pubkey: String,
+    ) -> Result<()> {
+        ctx.accounts
+            .register_protocol(&ctx.bumps, name, percent, gpg_pubkey)
     }
 
     pub fn new_vulnerability(
         ctx: Context<NewVulnerability>,
-        title: String,
-        form: Vec<String>,
+        message: String,
         seed: u64,
     ) -> Result<()> {
-        ctx.accounts
-            .new_vulnerability(&ctx.bumps, title, form, seed)
+        ctx.accounts.new_vulnerability(&ctx.bumps, message, seed)
+    }
+
+    pub fn register_hacker(ctx: Context<RegisterHacker>, name: String) -> Result<()> {
+        ctx.accounts.register_hacker(&ctx.bumps, name)
     }
 }

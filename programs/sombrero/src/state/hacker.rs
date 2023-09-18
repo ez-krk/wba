@@ -3,23 +3,18 @@ use anchor_lang::prelude::*;
 use crate::constants::*;
 
 #[account]
-pub struct Protocol {
-    pub owner: Pubkey,
-    pub sol_vault: Pubkey,
+pub struct Hacker {
     pub name: String,
-    pub percent: u8,
-    pub gpg_pubkey: String,
     pub paid : u64,
     pub vulnerabilities: u64,
     pub hacks: u64,
-    pub approved: u64,
     pub created_at: i64,
     pub bump: u8,
 }
 
-impl Protocol {
+impl Hacker {
     pub const LEN: usize = DISCRIMINATOR_LENGTH
-        + PUBLIC_KEY_LENGTH * 2 // owner
+        + PUBLIC_KEY_LENGTH // owner
         + STRING_LENGTH_PREFIX 
         + MAX_PROTOCOL_LENGTH
         + 8 * 3 // paid, vulnerabilities, hacks
