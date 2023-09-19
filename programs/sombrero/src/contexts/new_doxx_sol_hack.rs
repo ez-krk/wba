@@ -1,4 +1,4 @@
-use crate::state::{Hacker, Protocol, SolHack};
+use crate::state::{DoxxSolHack, Hacker, Protocol};
 use anchor_lang::prelude::*;
 use anchor_lang::system_program::{transfer, Transfer};
 use std::collections::BTreeMap;
@@ -30,16 +30,16 @@ pub struct NewSolHack<'info> {
     #[account(
         init,
         payer = signer,
-        seeds = [b"hack", protocol.key().as_ref(), hacker.key().as_ref(), seed.to_le_bytes().as_ref()],
+        seeds = [b"sol_hack", protocol.key().as_ref(), signer.key().as_ref(), seed.to_le_bytes().as_ref()],
         bump,
-        space = SolHack::LEN
+        space = DoxxSolHack::LEN
     )]
-    pub hack: Account<'info, SolHack>,
+    pub doxx_sol_hack: Account<'info, DoxxSolHack>,
     pub system_program: Program<'info, System>,
 }
 
 impl<'info> NewSolHack<'info> {
-    pub fn new_sol_hack(
+    pub fn new_doxx_sol_hack(
         &mut self,
         bumps: &BTreeMap<String, u8>,
         amount: u64,
@@ -54,7 +54,7 @@ impl<'info> NewSolHack<'info> {
         // pub bump: u8,
         // pub seed: u64,
 
-        let hack = &mut self.hack;
+        let hack = &mut self.doxx_sol_hack;
 
         hack.payout = self.payout.key();
         hack.protocol = self.protocol.key();

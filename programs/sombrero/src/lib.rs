@@ -35,11 +35,15 @@ pub mod sombrero {
         ctx.accounts.register_hacker(&ctx.bumps, name)
     }
 
-    pub fn new_sol_hack(ctx: Context<NewSolHack>, amount: u64, seed: u64) -> Result<()> {
-        ctx.accounts.new_sol_hack(&ctx.bumps, amount, seed)
+    pub fn new_doxx_sol_hack(ctx: Context<NewSolHack>, amount: u64, seed: u64) -> Result<()> {
+        ctx.accounts.new_doxx_sol_hack(&ctx.bumps, amount, seed)
     }
 
-    pub fn approve_sol_hack(ctx: Context<ApproveSolHack>) -> Result<()> {
-        ctx.accounts.approve_sol_hack()
+    pub fn approve_doxx_sol_hack(ctx: Context<ApproveDoxxSolHack>) -> Result<()> {
+        ctx.accounts.approve_doxx_sol_hack()
+    }
+
+    pub fn approve_anon_sol_hack(ctx: Context<ApproveAnonSolHack>) -> Result<()> {
+        ctx.accounts.approve_anon_sol_hack()
     }
 }

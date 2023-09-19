@@ -12,8 +12,9 @@ feedback = "FEEDLQWp85GJBrum4ASAR6WEAW595oQfaST1N84HZFbS"
 launchpad = "KRKATotRqvLrvEjyeGKeBsR5W5UQxe29Ap2kLgwRcC7"
 input = "DEVK1cQcDUsCwnE1rZvKvEeg4GmPo4SSfmV3cb1TEw2u"
 pastebin = "KRKTFYKLDDLMtYFLGZhkCLgZcorCmXmNG79BVtfm9Lp"
-game= "KRKMSj1XSgTkjVgHey9DSo5PxC2Z7AoUY48rzcjHyMo"
-# amm = "AMMwzryp5mKRy6nCn9bGor4vGAhuqsZaLsqkGDnvkVds"
+game = "KRKMSj1XSgTkjVgHey9DSo5PxC2Z7AoUY48rzcjHyMo"
+dice = "D1CEThswCK5MrxtdaxhMidVMYsVSiwYExpDUi3Ssud9J"
+amm = "AMMwzryp5mKRy6nCn9bGor4vGAhuqsZaLsqkGDnvkVds"
 
 [test.validator]
 url = "https://api.mainnet-beta.solana.com"

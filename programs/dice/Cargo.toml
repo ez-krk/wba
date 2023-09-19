@@ -1,12 +1,12 @@
 [package]
-name = "game"
+name = "dice"
 version = "0.1.0"
 description = "Created with Anchor"
 edition = "2021"
 
 [lib]
 crate-type = ["cdylib", "lib"]
-name = "game"
+name = "dice"
 
 [features]
 no-entrypoint = []
@@ -16,7 +16,6 @@ cpi = ["no-entrypoint"]
 default = []
 
 [dependencies]
-anchor-lang = {version = "0.28.0", features=["init-if-needed"]}
-anchor-spl = {version = "0.28.0", features=["metadata"]}
-mpl-token-metadata = "1.13.2"
+anchor-lang = {version = "0.28.0" ,features=["init-if-needed"]}
+anchor-spl = "0.28.0"
 solana-program = "1.16.13"
