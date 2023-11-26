@@ -1,39 +1,41 @@
 {
-    "scripts": {
-        "lint:fix": "prettier */*.js \"*/**/*{.js,.ts}\" -w",
-        "lint": "prettier */*.js \"*/**/*{.js,.ts}\" --check",
-        "keygen": "ts-node ./ts/prereqs/commands/keygen.ts",
-        "airdrop": "ts-node ./ts/prereqs/commands/airdrop.ts",
-        "transfer": "ts-node ./ts/prereqs/commands/transfer.ts",
-        "enroll": "ts-node ./ts/prereqs/commands/enroll.ts",
-        "spl-init": "ts-node ./ts/challenges/spl/spl_init.ts",
-        "spl-mint": "ts-node ./ts/challenges/spl/spl_mint.ts",
-        "spl-metadata": "ts-node ./ts/challenges/spl/spl_metadata.ts",
-        "spl-transfer": "ts-node ./ts/challenges/spl/spl_transfer.ts",
-        "vault-init": "ts-node ./ts/challenges/vault/vault_init.ts",
-        "vault-deposit": "ts-node ./ts/challenges/vault/vault_deposit.ts",
-        "vault-withdraw": "ts-node ./ts/challenges/vault/vault_withdraw.ts",
-        "vault-spl-deposit": "ts-node ./ts/challenges/vault/vault_deposit_spl.ts",
-        "vault-spl-withdraw": "ts-node ./ts/challenges/vault/vault_withdraw_spl.ts",
-        "nft-image": "ts-node ./ts/challenges/nft/nft_image.ts",
-        "nft-metadata": "ts-node ./ts/challenges/nft/nft_metadata.ts",
-        "nft-mint": "ts-node ./ts/challenges/nft/nft_mint.ts"
-    },
-    "dependencies": {
-        "@coral-xyz/anchor": "^0.28.0",
-        "@metaplex-foundation/mpl-token-metadata": "^2.13.0",
-        "@solana/spl-token": "^0.3.8",
-        "@solana/web3.js": "^1.78.4"
-    },
-    "devDependencies": {
-        "@types/bn.js": "^5.1.0",
-        "@types/chai": "^4.3.0",
-        "@types/mocha": "^9.0.0",
-        "chai": "^4.3.4",
-        "mocha": "^9.0.3",
-        "prettier": "^2.6.2",
-        "ts-mocha": "^10.0.0",
-        "ts-node": "^10.9.1",
-        "typescript": "^4.3.5"
-    }
+  "scripts": {
+    "lint:fix": "prettier */*.js \"*/**/*{.js,.ts}\" -w",
+    "lint": "prettier */*.js \"*/**/*{.js,.ts}\" --check",
+    "keygen": "ts-node ./ts/prereqs/commands/keygen.ts",
+    "airdrop": "ts-node ./ts/prereqs/commands/airdrop.ts",
+    "transfer": "ts-node ./ts/prereqs/commands/transfer.ts",
+    "enroll": "ts-node ./ts/prereqs/commands/enroll.ts",
+    "spl-init": "ts-node ./ts/challenges/spl/spl_init.ts",
+    "spl-mint": "ts-node ./ts/challenges/spl/spl_mint.ts",
+    "spl-metadata": "ts-node ./ts/challenges/spl/spl_metadata.ts",
+    "spl-transfer": "ts-node ./ts/challenges/spl/spl_transfer.ts",
+    "vault-init": "ts-node ./ts/challenges/vault/vault_init.ts",
+    "vault-deposit": "ts-node ./ts/challenges/vault/vault_deposit.ts",
+    "vault-withdraw": "ts-node ./ts/challenges/vault/vault_withdraw.ts",
+    "vault-spl-deposit": "ts-node ./ts/challenges/vault/vault_deposit_spl.ts",
+    "vault-spl-withdraw": "ts-node ./ts/challenges/vault/vault_withdraw_spl.ts",
+    "nft-image": "ts-node ./ts/challenges/nft/nft_image.ts",
+    "nft-metadata": "ts-node ./ts/challenges/nft/nft_metadata.ts",
+    "nft-mint": "ts-node ./ts/challenges/nft/nft_mint.ts",
+    "wh-init": "ts-node ./ts/whitehat/initialize.ts"
+  },
+  "dependencies": {
+    "@coral-xyz/anchor": "^0.28.0",
+    "@metaplex-foundation/mpl-token-metadata": "^2.13.0",
+    "@solana/spl-token": "^0.3.8",
+    "@solana/web3.js": "^1.78.4",
+    "tweetnacl": "^1.0.3"
+  },
+  "devDependencies": {
+    "@types/bn.js": "^5.1.0",
+    "@types/chai": "^4.3.0",
+    "@types/mocha": "^9.0.0",
+    "chai": "^4.3.4",
+    "mocha": "^9.0.3",
+    "prettier": "^2.6.2",
+    "ts-mocha": "^10.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.3.5"
+  }
 }

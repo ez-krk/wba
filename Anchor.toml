@@ -6,15 +6,17 @@ input = "DEVK1cQcDUsCwnE1rZvKvEeg4GmPo4SSfmV3cb1TEw2u"
 pastebin = "KRKTFYKLDDLMtYFLGZhkCLgZcorCmXmNG79BVtfm9Lp"
 
 [programs.localnet]
-wba_vault = "VG58thf3atpUtDia6NUiJJeJLuHMy2z5CRiTBPXLzwT"
-escrow = "KRKA3ugDP5iE79zDuLQEs6qCvY7eSRYbS94vgsTgRU2"
-feedback = "FEEDLQWp85GJBrum4ASAR6WEAW595oQfaST1N84HZFbS"
-launchpad = "KRKATotRqvLrvEjyeGKeBsR5W5UQxe29Ap2kLgwRcC7"
-input = "DEVK1cQcDUsCwnE1rZvKvEeg4GmPo4SSfmV3cb1TEw2u"
-pastebin = "KRKTFYKLDDLMtYFLGZhkCLgZcorCmXmNG79BVtfm9Lp"
-game = "KRKMSj1XSgTkjVgHey9DSo5PxC2Z7AoUY48rzcjHyMo"
-dice = "D1CEThswCK5MrxtdaxhMidVMYsVSiwYExpDUi3Ssud9J"
-amm = "AMMwzryp5mKRy6nCn9bGor4vGAhuqsZaLsqkGDnvkVds"
+# wba_vault = "VG58thf3atpUtDia6NUiJJeJLuHMy2z5CRiTBPXLzwT"
+# escrow = "KRKA3ugDP5iE79zDuLQEs6qCvY7eSRYbS94vgsTgRU2"
+# feedback = "FEEDLQWp85GJBrum4ASAR6WEAW595oQfaST1N84HZFbS"
+# launchpad = "KRKATotRqvLrvEjyeGKeBsR5W5UQxe29Ap2kLgwRcC7"
+# input = "DEVK1cQcDUsCwnE1rZvKvEeg4GmPo4SSfmV3cb1TEw2u"
+# pastebin = "KRKTFYKLDDLMtYFLGZhkCLgZcorCmXmNG79BVtfm9Lp"
+# sqland = "KRKMSj1XSgTkjVgHey9DSo5PxC2Z7AoUY48rzcjHyMo"
+# dice = "D1CEThswCK5MrxtdaxhMidVMYsVSiwYExpDUi3Ssud9J"
+# amm = "AMMwzryp5mKRy6nCn9bGor4vGAhuqsZaLsqkGDnvkVds"
+# whitehat = "SMBKnshAzPi9WZQEUyRxsm6PYZbyZEmxbxbaoMWNHkA"
+mail = "BXctdRq8zm4Zx8dsAMbZ5BU4k1EnuZvv4Jm44d9W4v3Q"
 
 [test.validator]
 url = "https://api.mainnet-beta.solana.com"
@@ -26,8 +28,8 @@ address = "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s"
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "devnet"
+cluster = "localnet"
 wallet = "/home/dev/.config/solana/id.json"
 
 [scripts]
-test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/pastebin.ts"
+test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/whitehat.ts"

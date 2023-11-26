@@ -26,7 +26,7 @@ pub struct Deposit<'info> {
         payer = owner,
         seeds = [b"spl_vault", state.key().as_ref()],
         token::mint = mint,
-        token::authority = vault,
+        token::authority = auth,
         bump
     )]
     vault: Account<'info, TokenAccount>,
