@@ -10,7 +10,7 @@ pub struct Payment<'info> {
     owner: Signer<'info>,
     #[account(
         mut,
-        seeds = [b"sol_vault", state.key().as_ref()],
+        seeds = [b"vault", state.key().as_ref()],
         bump = state.vault_bump
     )]
     sol_vault: SystemAccount<'info>,
